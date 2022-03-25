@@ -9,6 +9,7 @@ LIVE DEMO: [Link](http://130.162.240.234:81/)
 * React.JS 
 * Tailwind
 * Express.js
+* Prisma - SqLite
 
 >Backend zarówno jak frontend napisane w TypeScirpt
 
