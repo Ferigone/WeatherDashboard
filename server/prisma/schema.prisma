@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model City {
+  id          Int           @id @default(autoincrement())
+  name        String
+  displayName String
+  Temperature Temperature[]
+}
+
+model Temperature {
+  id       Int      @id @default(autoincrement())
+  cityId   Int
+  dateTime DateTime
+  value    Decimal
+  City     City     @relation(fields: [cityId], references: [id])
+}
