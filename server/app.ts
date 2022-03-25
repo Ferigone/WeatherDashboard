@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import express from "express";
 import cors from 'cors'
 import moment from "moment";
+import path  from 'path'
 
 const prisma = new PrismaClient();
 const app = express();
@@ -32,6 +33,12 @@ const today = "2022-02-01";
 
 app.use(express.json());
 app.use(cors())
+
+app.use(express.static(path.resolve(__dirname, './build')));
+
+app.get('/', (req, res) => {
+  res.send(path.resolve(__dirname, './build', 'index.html'));
+})
 
 app.get("/cities", async (req, res) => {
   const cities = await prisma.city.findMany();
