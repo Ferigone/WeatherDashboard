@@ -2,6 +2,8 @@
 
 Aplikacja służąca do wyświetlania pogody dla danego miasta którego już posiadamy w bazie danych.
 
+LIVE DEMO: [Link](http://130.162.240.234:81/)
+
 ## Tech Stack
 
 * React.JS 
