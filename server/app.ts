@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 
 app.get("/cities", async (req, res) => {
   const cities = await prisma.city.findMany();
-  res.json(cities);
+  res.status(200).json(cities);
 });
 
 app.get("/:city/chartData/temperature", async (req, res) => {
@@ -60,12 +60,12 @@ app.get("/:city/chartData/temperature", async (req, res) => {
     },
   });
   if (!data) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: "Provided city does not exists in db",
     });
   }
-  res.json(data.Temperature);
+  res.status(200).json(data.Temperature);
 });
 
 app.get("/:city/chartData/temperature/max", async (req, res) => {
@@ -84,7 +84,7 @@ app.get("/:city/chartData/temperature/max", async (req, res) => {
   });
 
   if (!data) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: "Provided city does not exists in db",
     });
@@ -117,7 +117,7 @@ app.get("/:city/chartData/temperature/max", async (req, res) => {
     x.dateTime = moment(x.dateTime).format('YYYY-MM-DD')
   })
 
-  res.json(maxEachDay);
+  res.status(200).json(maxEachDay);
 });
 
 app.post("/:city/chartData/temperature", async (req, res) => {
@@ -125,11 +125,11 @@ app.post("/:city/chartData/temperature", async (req, res) => {
   const { dateTime, value }: { dateTime: Date; value: number } = req.body;
 
   if (!new Date(dateTime).getTime()) {
-    return res.json({ success: false, message: "dateTime is not valid" });
+    return res.status(400).json({ success: false, message: "dateTime is not valid" });
   }
 
   if (typeof value !== "number") {
-    return res.json({ success: false, message: "value is not valid" });
+    return res.status(400).json({ success: false, message: "value is not valid" });
   }
 
   const data: City = await prisma.city.findFirst({
@@ -137,7 +137,7 @@ app.post("/:city/chartData/temperature", async (req, res) => {
   });
 
   if (!data) {
-    return res.json({
+    return res.status(400).json({
       success: false,
       message: "Provided city does not exists in db",
     });
@@ -152,7 +152,7 @@ app.post("/:city/chartData/temperature", async (req, res) => {
       value: value,
     },
   });
-  res.json(result);
+  res.status(200).json(result);
 });
 
 app.listen(80, () => console.log("REST API server: http://localhost"));
